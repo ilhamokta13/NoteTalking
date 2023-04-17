@@ -2,9 +2,11 @@ package com.example.notetalking
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.notetalking.dbroom.DatabaseNote
 import com.example.notetalking.dbroom.EntityNote
+import com.example.notetalking.dbroom.InterfaceNote
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -49,4 +51,6 @@ class HomeViewModel (app : Application) : AndroidViewModel(app) {
         dataDao?.updateNOte(entityNote)
         getNote()
     }
+
+
 }

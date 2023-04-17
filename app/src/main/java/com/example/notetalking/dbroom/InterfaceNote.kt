@@ -1,5 +1,6 @@
 package com.example.notetalking.dbroom
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao

@@ -20,37 +20,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="50dp"
-            android:layout_toStartOf="@+id/btnAscending"
+            android:layout_toStartOf="@+id/btn_logout"
             android:padding="18dp"
             android:text="Welcome, username!" />
 
-
         <TextView
-            android:id="@+id/btnAscending"
+            android:id="@+id/btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="14dp"
-            android:text="Ascending" />
+            android:padding="18dp"
+            android:text="Logout" />
 
-        <TextView
-            android:id="@+id/btnDescending"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnAscending"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:text="Descending" />
-
-        <ImageView
-            android:id="@+id/btnEdit"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="16dp"
-            android:layout_toStartOf="@id/btnAscending"
-            android:backgroundTint="#40FFFFFF"
-            android:contentDescription="edit"
-            android:src="@drawable/ic_baseline_filter_alt_24" />
 
         <TextView
             android:id="@+id/Homescreen"

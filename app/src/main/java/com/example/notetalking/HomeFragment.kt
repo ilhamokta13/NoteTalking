@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -21,6 +22,7 @@ import com.example.notetalking.dbroom.DatabaseNote
 import com.example.notetalking.dbroom.EntityNote
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.Locale.filter
 
 
 class HomeFragment : Fragment() {
@@ -30,6 +32,7 @@ class HomeFragment : Fragment() {
     lateinit var adapter: HomeAdapter
     lateinit var note : ArrayList<EntityNote>
     var datbasenote :DatabaseNote? =null
+
 
 
     override fun onCreateView(
@@ -47,10 +50,6 @@ class HomeFragment : Fragment() {
         val fullname = pref.getString("username", "username")
         binding.welcome.text = "Welcome, $fullname!"
         Log.d("Homescreen", "Username : $fullname")
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         Vm = ViewModelProvider(this).get(HomeViewModel::class.java)
         //ViewModel
@@ -71,38 +70,30 @@ class HomeFragment : Fragment() {
             Navigation.findNavController(binding.root).navigate(R.id.action_homeFragment_to_tambahNoteFragment)
 
         }
-    }
 
-//       binding.btnAscending.setOnClickListener {
-//           note.sortBy {
-//               it.title
-//           }
-//
-//           binding.btnDescending.setOnClickListener {
-//               note.sortByDescending {
-//                   it.title
-//               }
-//           }
-
-
-
-    override fun onStart() {
-        super.onStart()
-        GlobalScope.launch {
-            var data = datbasenote?.noteDao()?.getDataNote()
-            activity?.runOnUiThread {
-                adapter = HomeAdapter(requireActivity(),data!!)
-                binding.rvMain.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                binding.rvMain.adapter = adapter
-            }
+        binding.btnLogout.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(R.id.action_homeFragment_to_loginFragment)
         }
+
     }
 
 
-}
 
 
+            override fun onStart() {
+                super.onStart()
+                GlobalScope.launch {
+                    var data = datbasenote?.noteDao()?.getDataNote()
+                    activity?.runOnUiThread {
+                        adapter = HomeAdapter(requireActivity(), data!!)
+                        binding.rvMain.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                        binding.rvMain.adapter = adapter
+                    }
+                }
+            }
 
 
+        }
 
 

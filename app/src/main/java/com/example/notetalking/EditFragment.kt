@@ -28,33 +28,45 @@ class EditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentEditBinding.inflate(layoutInflater)
+        binding = FragmentEditBinding.inflate(layoutInflater,container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //Update Note
         dbasenote = DatabaseNote.getInstance(requireContext())
         Vm = ViewModelProvider(this).get(HomeViewModel::class.java)
-
-        binding.btnUpdate.setOnClickListener {
-            GlobalScope.async {
-                var judul = binding.editTitle.text.toString()
-                var isi = binding.editNote.text.toString()
-
-
-                val dataInsert = EntityNote(id,judul,isi)
-                Vm.insert(dataInsert)
-
-                activity?.runOnUiThread {
-                    Toast.makeText(context,"Berhasil menambahkan note", Toast.LENGTH_LONG)
-                }
-            }
-            Navigation.findNavController(binding.root).navigate(R.id.action_editFragment_to_homeFragment)
-
-        }
-
-        }
+        var getnote = arguments?.getSerializable("edit") as EntityNote
+        binding.editTitle.setText(getnote.title)
+        binding.editdata.setText(getnote.content)
+        binding.idNote.setText(getnote.id.toString())
+        editnote()
     }
+
+
+        private fun editnote() {
+            binding.btnUpdate.setOnClickListener {
+                GlobalScope.async {
+                    var getNote = arguments?.getSerializable("edit") as EntityNote
+                    var judul = binding.editTitle.text.toString()
+                    var isi = binding.editNote.text.toString()
+
+
+                    val dataInsert = EntityNote(getNote.id, judul, isi)
+                    Vm.insert(dataInsert)
+
+                    activity?.runOnUiThread {
+                        Toast.makeText(context, "Berhasil menambahkan note", Toast.LENGTH_LONG)
+                    }
+                }
+                Navigation.findNavController(binding.root).navigate(R.id.action_editFragment_to_homeFragment)
+
+            }
+        }
+
+        }
+
+
 
 
