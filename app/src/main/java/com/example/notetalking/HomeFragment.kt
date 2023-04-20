@@ -1,17 +1,11 @@
 package com.example.notetalking
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,7 +16,6 @@ import com.example.notetalking.dbroom.DatabaseNote
 import com.example.notetalking.dbroom.EntityNote
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.Locale.filter
 
 
 class HomeFragment : Fragment() {
@@ -34,6 +27,10 @@ class HomeFragment : Fragment() {
     var datbasenote :DatabaseNote? =null
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,10 +74,53 @@ class HomeFragment : Fragment() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.item_menu_filter, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.ascending -> {
+                getNoteAscend()
+                return true
+            }
+            R.id.descending -> {
+                getNoteDescend()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
+    fun getNoteAscend() {
+        GlobalScope.launch {
+            var data = datbasenote?.noteDao()?.getNoteASC()
+            activity?.runOnUiThread {
+                adapter = HomeAdapter(requireActivity(),data!!)
+                binding.rvMain.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                binding.rvMain.adapter = adapter
+            }
+        }
+    }
+
+    fun getNoteDescend() {
+        GlobalScope.launch {
+            var data = datbasenote?.noteDao()?.getDataNote()
+            activity?.runOnUiThread {
+                adapter = HomeAdapter(requireActivity(),data!!)
+                binding.rvMain.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                binding.rvMain.adapter = adapter
+            }
+        }
+    }
 
 
 
-            override fun onStart() {
+
+
+    override fun onStart() {
                 super.onStart()
                 GlobalScope.launch {
                     var data = datbasenote?.noteDao()?.getDataNote()

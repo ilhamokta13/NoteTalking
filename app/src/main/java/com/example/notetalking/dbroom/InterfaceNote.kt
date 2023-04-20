@@ -8,7 +8,10 @@ interface InterfaceNote {
     @Insert
     fun insertNote(note: EntityNote)
 
-    @Query("SELECT * FROM EntityNote ORDER BY id DESC")
+    @Query("SELECT * FROM EntityNote ORDER BY title ASC ")
+    fun getNoteASC(): List<EntityNote>
+
+    @Query("SELECT * FROM EntityNote ORDER BY title DESC")
     fun getDataNote() : List<EntityNote>
 
     @Delete

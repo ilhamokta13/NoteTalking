@@ -62,9 +62,6 @@ class HomeAdapter(var context: Context, var note: List<EntityNote>) : RecyclerVi
             var edit = Bundle()
             edit.putSerializable("edit",note[position])
             Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_editFragment,edit)
-//            val fragmentManager = (it.context as AppCompatActivity).supportFragmentManager
-//            val dialogFragment = EditFragment()
-//            dialogFragment.show(fragmentManager, "MyDialogFragment")
 
         }
 
